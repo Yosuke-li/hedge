@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
+import 'dart:convert';
 import 'package:hedge_manager/model/pricing_apply.dart';
 
 void main() {
