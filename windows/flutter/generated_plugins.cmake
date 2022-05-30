@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   desktop_webview_window
+  local_notifier
   sentry_flutter
   tray_manager
   url_launcher_windows

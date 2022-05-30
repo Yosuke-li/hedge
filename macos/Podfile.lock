@@ -4,6 +4,8 @@ PODS:
   - device_info_plus_macos (0.0.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
+  - local_notifier (0.1.0):
+    - FlutterMacOS
   - package_info_plus_macos (0.0.1):
     - FlutterMacOS
   - path_provider_macos (0.0.1):
@@ -28,6 +30,7 @@ DEPENDENCIES:
   - desktop_webview_window (from `Flutter/ephemeral/.symlinks/plugins/desktop_webview_window/macos`)
   - device_info_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
+  - local_notifier (from `Flutter/ephemeral/.symlinks/plugins/local_notifier/macos`)
   - package_info_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus_macos/macos`)
   - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
   - sentry_flutter (from `Flutter/ephemeral/.symlinks/plugins/sentry_flutter/macos`)
@@ -47,6 +50,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus_macos/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
+  local_notifier:
+    :path: Flutter/ephemeral/.symlinks/plugins/local_notifier/macos
   package_info_plus_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/package_info_plus_macos/macos
   path_provider_macos:
@@ -66,6 +71,7 @@ SPEC CHECKSUMS:
   desktop_webview_window: d4365e71bcd4e1aa0c14cf0377aa24db0c16a7e2
   device_info_plus_macos: 1ad388a1ef433505c4038e7dd9605aadd1e2e9c7
   FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
+  local_notifier: e9506bc66fc70311e8bc7291fb70f743c081e4ff
   package_info_plus_macos: f010621b07802a241d96d01876d6705f15e77c1c
   path_provider_macos: 3c0c3b4b0d4a76d2bf989a913c2de869c5641a19
   Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341

@@ -353,8 +353,8 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
         Visibility(
           key: Key(orders.hashCode.toString()),
           visible: widget.showTree == true && orders.isNotEmpty == true,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 100, maxHeight: 150),
+          child: Container(
+            height: 173,
             child: Scrollbar(
               controller: _controller,
               child: Container(
@@ -378,7 +378,7 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                     final filledPrice =
                         HedgeSumHelper.filledOrderSumPrice(order.orderId);
                     return Container(
-                      width: 280,
+                      width: 300,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
@@ -389,12 +389,13 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                         borderRadius: BorderRadius.circular(5.0),
                       ),
                       padding:
-                          const EdgeInsets.only(top: 10, right: 10, left: 10),
+                          const EdgeInsets.only(top: 15, right: 10, left: 10),
                       margin: const EdgeInsets.only(right: 10, left: 10),
                       child: Column(
                         children: [
                           Container(
                             margin: const EdgeInsets.only(bottom: 10),
+                            height: 43,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -408,12 +409,15 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                                         color: Color(0xff797979),
                                       ),
                                     ),
+                                    const SizedBox(
+                                      height: 1.0,
+                                    ),
                                     Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          '${price?.pricingPrice ?? 0}',
+                                          '${price?.pricingPrice.toStringAsFixed(0) ?? 0}',
                                           style: const TextStyle(
                                               color: Colors.blue),
                                         ),
@@ -430,30 +434,88 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    const Text(
-                                      '成交数量/点价数量',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xff797979),
-                                      ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Container(
+                                          width: 50,
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            '成交数量',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              overflow: TextOverflow.ellipsis,
+                                              color: Color(0xff797979),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 60,
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            '/点价数量',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              overflow: TextOverflow.ellipsis,
+                                              color: Color(0xff797979),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 1.0,
                                     ),
                                     Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Container(
-                                          color: Colors.amber,
+                                          color: Color(0xffFFE18E),
+                                          width: 50,
+                                          height: 18,
+                                          alignment: Alignment.centerRight,
                                           child: Text(
-                                            '${price?.pricedSpotQty.toStringAsFixed(1) ?? 0}',
+                                            '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricedSpotQty ?? 0) ? price?.pricedSpotQty.toStringAsFixed(0) : price?.pricedSpotQty.toStringAsFixed(1) ?? 0} ',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  (price?.pricedSpotQty ?? 0) <
+                                                          10000
+                                                      ? 14
+                                                      : 10,
+                                            ),
                                           ),
                                         ),
                                         Container(
-                                          color: Colors.amberAccent,
+                                          color: Color(0xffFFF2CC),
+                                          width: 10,
+                                          height: 18,
+                                          child: Text(' / '),
+                                        ),
+                                        Container(
+                                          color: Color(0xffFFF2CC),
+                                          width: 40,
+                                          height: 18,
+                                          alignment: Alignment.centerRight,
                                           child: Text(
-                                            '/ ${price?.pricingSpotQty.toStringAsFixed(1) ?? 0}',
+                                            '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricingSpotQty ?? 0) ? price?.pricingSpotQty.toStringAsFixed(0) : price?.pricingSpotQty.toStringAsFixed(1) ?? 0} ',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  (price?.pricingSpotQty ?? 0) <
+                                                          10000
+                                                      ? 14
+                                                      : 10,
+                                            ),
                                           ),
                                         ),
-                                        const Text('吨'),
+                                        Container(
+                                          width: 10,
+                                          alignment: Alignment.centerRight,
+                                          child: const Text('吨'),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -472,6 +534,7 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                           if (hedgingStrategy.enterUsingCode != null)
                             Container(
                               margin: const EdgeInsets.only(top: 5),
+                              height: 50,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -498,7 +561,7 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                                         ),
                                         Text(
                                           hedgingStrategy.enterUsingCode ?? '',
-                                          style: const TextStyle(fontSize: 15),
+                                          style: const TextStyle(fontSize: 14),
                                         ),
                                       ],
                                     ),
@@ -514,19 +577,52 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                                               CrossAxisAlignment.center,
                                           children: [
                                             Container(
-                                              color: Colors.greenAccent,
+                                              color: Color(0xffC6FFBD),
+                                              width: 50,
+                                              height: 18,
+                                              alignment: Alignment.centerRight,
                                               child: Text(
-                                                '${order.completedFutQty.toStringAsFixed(1)}',
+                                                '${HedgeSumHelper.checkNumFixedIsAllZero(order.completedFutQty) ? order.completedFutQty.toStringAsFixed(0) : order.completedFutQty.toStringAsFixed(1)}',
+                                                style: TextStyle(
+                                                  fontSize:
+                                                  (order.completedFutQty) <
+                                                      10000
+                                                      ? 14
+                                                      : 10,
+                                                ),
                                               ),
                                             ),
                                             Container(
-                                              color: Colors.greenAccent,
+                                              color: Color(0xffEFF6EC),
+                                              width: 10,
+                                              height: 18,
+                                              child: Text(' / '),
+                                            ),
+                                            Container(
+                                              color: Color(0xffEFF6EC),
+                                              width: 40,
+                                              height: 18,
+                                              alignment: Alignment.centerRight,
                                               child: Text(
-                                                '/${order.hedgeQty.toStringAsFixed(1)}',
+                                                '${HedgeSumHelper.checkNumFixedIsAllZero(order.hedgeQty) ? order.hedgeQty.toStringAsFixed(0) : order.hedgeQty.toStringAsFixed(1)}',
+                                                style: TextStyle(
+                                                  fontSize:
+                                                  (order.hedgeQty) <
+                                                      10000
+                                                      ? 14
+                                                      : 10,
+                                                ),
                                               ),
                                             ),
-                                            const Text('吨'),
+                                            Container(
+                                              width: 10,
+                                              alignment: Alignment.centerRight,
+                                              child: const Text('吨'),
+                                            ),
                                           ],
+                                        ),
+                                        const SizedBox(
+                                          height: 2.0,
                                         ),
                                         Row(
                                           children: [

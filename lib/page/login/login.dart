@@ -11,6 +11,7 @@ import 'package:hedge_manager/helper/store.dart';
 import 'package:hedge_manager/model/user.dart';
 import 'package:hedge_manager/model/user_pass.dart';
 import 'package:hedge_manager/page/management/home_page/home_page.dart';
+import 'package:hedge_manager/page/webview/desktop_notifier.dart';
 import 'package:hedge_manager/widget/api_call_back.dart';
 import 'package:hedge_manager/widget/toast_utils.dart';
 
@@ -112,6 +113,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   title: Text('xx'),
+      //   actions: [
+      //     GestureDetector(
+      //       onTap: () {
+      //         NavigatorUtils.pushWidget(context, DesktopNotifierPage());
+      //       },
+      //       child: Text('测试'),
+      //     ),
+      //   ],
+      // ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

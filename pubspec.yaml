@@ -30,6 +30,7 @@ dependencies:
   flutter_swiper_plus: ^2.0.4
   sentry_flutter: ^6.5.1
   tray_manager: ^0.1.7 #系统托盘
+  local_notifier: ^0.1.4
 
 
 dev_dependencies:

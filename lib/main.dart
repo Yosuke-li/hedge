@@ -9,6 +9,7 @@ import 'package:hedge_manager/page/login/login.dart';
 import 'package:hedge_manager/widget/desktop_sys_manager.dart';
 import 'package:hedge_manager/widget/local_log.dart';
 import 'package:hedge_manager/widget/modal_utils.dart';
+import 'package:local_notifier/local_notifier.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -24,6 +25,8 @@ void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+    localNotifier.setAppName('com.example.hedgeManager');
+
     await windowManager.ensureInitialized();
 
     windowManager.waitUntilReadyToShow().then((value) async {

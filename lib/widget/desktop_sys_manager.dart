@@ -32,7 +32,7 @@ class _DesktopSysManagerState extends State<DesktopSysManager>
   /// 系统托盘里显示图标
   void _show() async {
     await _trayManager.setIcon('assets/img/favicon.ico');
-    _generateContextMenu();
+    // _generateContextMenu();
   }
 
   /// 设置菜单项
@@ -52,8 +52,8 @@ class _DesktopSysManagerState extends State<DesktopSysManager>
 
   @override
   void onTrayIconRightMouseDown() async {
-    await _trayManager.popUpContextMenu();
-    Log.info('鼠标右键点击');
+    // await _trayManager.popUpContextMenu();
+    // Log.info('鼠标右键点击');
   }
 
   @override

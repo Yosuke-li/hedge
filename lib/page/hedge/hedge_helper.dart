@@ -219,4 +219,10 @@ class HedgeSumHelper {
     }
     return sum;
   }
+
+
+  static bool checkNumFixedIsAllZero(num value) {
+    final v = value.floor();
+    return value - v == 0;
+  }
 }
