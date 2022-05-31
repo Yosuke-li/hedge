@@ -3,9 +3,9 @@ import 'package:local_notifier/local_notifier.dart';
 import 'package:path/path.dart' as path;
 
 class DesktopNotifierPage extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
 
-  const DesktopNotifierPage({Key? key, required this.child}) : super(key: key);
+  const DesktopNotifierPage({Key? key, this.child}) : super(key: key);
 
   @override
   _DesktopNotifierPageState createState() => _DesktopNotifierPageState();
@@ -23,7 +23,7 @@ class _DesktopNotifierPageState extends State<DesktopNotifierPage> {
   void init() {
     notification = LocalNotification(
       title: "消息更新",
-      body: "hello flutter!",
+      body: "有新的点价单！点击查看",
     );
     notification.onShow = () {
       print('onShow ${notification.identifier}');

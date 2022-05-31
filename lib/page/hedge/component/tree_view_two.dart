@@ -475,7 +475,7 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                                       children: [
                                         Container(
                                           color: Color(0xffFFE18E),
-                                          width: 50,
+                                          width: 45,
                                           height: 18,
                                           alignment: Alignment.centerRight,
                                           child: Text(
@@ -486,6 +486,7 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                                                           10000
                                                       ? 14
                                                       : 10,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
@@ -508,11 +509,12 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                                                           10000
                                                       ? 14
                                                       : 10,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
                                         Container(
-                                          width: 10,
+                                          width: 15,
                                           alignment: Alignment.centerRight,
                                           child: const Text('吨'),
                                         ),
@@ -578,17 +580,18 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                                           children: [
                                             Container(
                                               color: Color(0xffC6FFBD),
-                                              width: 50,
+                                              width: 45,
                                               height: 18,
                                               alignment: Alignment.centerRight,
                                               child: Text(
-                                                '${HedgeSumHelper.checkNumFixedIsAllZero(order.completedFutQty) ? order.completedFutQty.toStringAsFixed(0) : order.completedFutQty.toStringAsFixed(1)}',
+                                                '${HedgeSumHelper.checkNumFixedIsAllZero(order.completedFutQty) ? order.completedFutQty.toStringAsFixed(0) : order.completedFutQty.toStringAsFixed(1)} ',
                                                 style: TextStyle(
                                                   fontSize:
                                                   (order.completedFutQty) <
                                                       10000
                                                       ? 14
                                                       : 10,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
@@ -604,18 +607,19 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                                               height: 18,
                                               alignment: Alignment.centerRight,
                                               child: Text(
-                                                '${HedgeSumHelper.checkNumFixedIsAllZero(order.hedgeQty) ? order.hedgeQty.toStringAsFixed(0) : order.hedgeQty.toStringAsFixed(1)}',
+                                                '${HedgeSumHelper.checkNumFixedIsAllZero(order.hedgeQty) ? order.hedgeQty.toStringAsFixed(0) : order.hedgeQty.toStringAsFixed(1)} ',
                                                 style: TextStyle(
                                                   fontSize:
                                                   (order.hedgeQty) <
                                                       10000
                                                       ? 14
                                                       : 10,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
                                             Container(
-                                              width: 10,
+                                              width: 15,
                                               alignment: Alignment.centerRight,
                                               child: const Text('吨'),
                                             ),
