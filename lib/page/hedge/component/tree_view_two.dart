@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hedge_manager/helper/array_helper.dart';
 import 'package:hedge_manager/helper/log_utils.dart';
@@ -151,7 +152,8 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
   }
 
   void init({String? key}) {
-    hedgingStrategy = getHedgingStrategy(hedgingStrategy.strategyId) ?? widget.hedgingStrategy;
+    hedgingStrategy = getHedgingStrategy(hedgingStrategy.strategyId) ??
+        widget.hedgingStrategy;
     if (hedgingStrategy.enterStgId != '-1') {
       enterStrategy = getEnterStrategy(hedgingStrategy.enterStgId);
     }
@@ -193,9 +195,7 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
 
   static HedgingStrategy? getHedgingStrategy(String id) {
     List<HedgingStrategy> hedges = SocketMsgConduit.getHedgingStrategies;
-    hedges = hedges
-        .where((element) => element.strategyId == id)
-        .toList();
+    hedges = hedges.where((element) => element.strategyId == id).toList();
     if (hedges.isNotEmpty == true) {
       return hedges.first;
     }
@@ -366,7 +366,7 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
           key: Key(orders.hashCode.toString()),
           visible: widget.showTree == true && orders.isNotEmpty == true,
           child: Container(
-            height: 173,
+            height: 183,
             child: Scrollbar(
               controller: _controller,
               child: Container(
@@ -384,288 +384,15 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    final order = ArrayHelper.get(orders, index)!;
+                    final HedgingOrder order = ArrayHelper.get(orders, index)!;
                     final PricingApply? price =
                         HedgeSumHelper.getPrice(order.ownerPricingId);
-                    final filledPrice =
-                        HedgeSumHelper.filledOrderSumPrice(order.orderId);
-                    return Container(
-                      width: 300,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: const Color(0xff797979),
-                          width: 1.0,
-                          style: BorderStyle.solid,
-                        ),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      padding:
-                          const EdgeInsets.only(top: 15, right: 10, left: 10),
-                      margin: const EdgeInsets.only(right: 10, left: 10),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            height: 43,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      '点价价格/最新成交',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xff797979),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 1.0,
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '${price?.pricingPrice.toStringAsFixed(0) ?? 0}',
-                                          style: const TextStyle(
-                                              color: Colors.blue),
-                                        ),
-                                        const Text('/74,670'),
-                                        const Icon(
-                                          Icons.keyboard_arrow_down,
-                                          size: 20,
-                                          color: Colors.green,
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          width: 50,
-                                          alignment: Alignment.centerRight,
-                                          child: Text(
-                                            '成交数量',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              overflow: TextOverflow.ellipsis,
-                                              color: Color(0xff797979),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 60,
-                                          alignment: Alignment.centerRight,
-                                          child: Text(
-                                            '/点价数量',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              overflow: TextOverflow.ellipsis,
-                                              color: Color(0xff797979),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 1.0,
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          color: Color(0xffFFE18E),
-                                          width: 45,
-                                          height: 18,
-                                          alignment: Alignment.centerRight,
-                                          child: Text(
-                                            '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricedSpotQty ?? 0) ? price?.pricedSpotQty.toStringAsFixed(0) : price?.pricedSpotQty.toStringAsFixed(1) ?? 0} ',
-                                            style: TextStyle(
-                                              fontSize:
-                                                  (price?.pricedSpotQty ?? 0) <
-                                                          10000
-                                                      ? 14
-                                                      : 10,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          color: Color(0xffFFF2CC),
-                                          width: 10,
-                                          height: 18,
-                                          child: Text(' / '),
-                                        ),
-                                        Container(
-                                          color: Color(0xffFFF2CC),
-                                          width: 40,
-                                          height: 18,
-                                          alignment: Alignment.centerRight,
-                                          child: Text(
-                                            '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricingSpotQty ?? 0) ? price?.pricingSpotQty.toStringAsFixed(0) : price?.pricingSpotQty.toStringAsFixed(1) ?? 0} ',
-                                            style: TextStyle(
-                                              fontSize:
-                                                  (price?.pricingSpotQty ?? 0) <
-                                                          10000
-                                                      ? 14
-                                                      : 10,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 15,
-                                          alignment: Alignment.centerRight,
-                                          child: const Text('吨'),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (hedgingStrategy.enterUsingCode != null)
-                            SizedBox(
-                              height: 1.0,
-                              width: MediaQuery.of(context).size.width * 0.3,
-                              child: Container(
-                                color: const Color(0xff797979),
-                              ),
-                            ),
-                          if (hedgingStrategy.enterUsingCode != null)
-                            Container(
-                              margin: const EdgeInsets.only(top: 5),
-                              height: 50,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          hedgingStrategy.enterStgId != '-1'
-                                              ? (enterStrategy?.enterStgName ??
-                                                  '')
-                                              : '标的进场',
-                                          style: TextStyle(
-                                              color:
-                                                  hedgingStrategy.enterStgId !=
-                                                          '-1'
-                                                      ? Colors.blue
-                                                      : Colors.green,
-                                              fontSize: 15),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          hedgingStrategy.enterUsingCode ?? '',
-                                          style: const TextStyle(fontSize: 14),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 5),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              color: Color(0xffC6FFBD),
-                                              width: 45,
-                                              height: 18,
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                '${HedgeSumHelper.checkNumFixedIsAllZero(order.completedFutQty) ? order.completedFutQty.toStringAsFixed(0) : order.completedFutQty.toStringAsFixed(1)} ',
-                                                style: TextStyle(
-                                                  fontSize:
-                                                  (order.completedFutQty) <
-                                                      10000
-                                                      ? 14
-                                                      : 10,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              color: Color(0xffEFF6EC),
-                                              width: 10,
-                                              height: 18,
-                                              child: Text(' / '),
-                                            ),
-                                            Container(
-                                              color: Color(0xffEFF6EC),
-                                              width: 40,
-                                              height: 18,
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                '${HedgeSumHelper.checkNumFixedIsAllZero(order.hedgeQty) ? order.hedgeQty.toStringAsFixed(0) : order.hedgeQty.toStringAsFixed(1)} ',
-                                                style: TextStyle(
-                                                  fontSize:
-                                                  (order.hedgeQty) <
-                                                      10000
-                                                      ? 14
-                                                      : 10,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 15,
-                                              alignment: Alignment.centerRight,
-                                              child: const Text('吨'),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 2.0,
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              '成交均价',
-                                              style: TextStyle(
-                                                fontSize: 10,
-                                                color: Color(0xff797979),
-                                              ),
-                                            ),
-                                            Text(
-                                              filledPrice.toStringAsFixed(0),
-                                              style: const TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 11,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
+                    return _OrderPriceItem(
+                      key: Key(price?.pricingId ?? ''),
+                      order: order,
+                      hedgingStrategy: hedgingStrategy,
+                      price: price,
+                      enterStrategy: enterStrategy,
                     );
                   },
                   itemCount: orders.length,
@@ -683,4 +410,347 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
 
   @override
   int get msgType => 3;
+}
+
+class _OrderPriceItem extends StatefulWidget {
+  final HedgingOrder order;
+  final PricingApply? price;
+  final HedgingStrategy hedgingStrategy;
+  final EnterStrategy? enterStrategy;
+
+  const _OrderPriceItem(
+      {Key? key,
+      this.price,
+      this.enterStrategy,
+      required this.order,
+      required this.hedgingStrategy})
+      : super(key: key);
+
+  @override
+  State<_OrderPriceItem> createState() => _OrderPriceItemState();
+}
+
+class _OrderPriceItemState extends State<_OrderPriceItem> {
+  bool isHover = false;
+  late double filledPrice;
+  late HedgingOrder order;
+  late PricingApply? price;
+  late HedgingStrategy hedgingStrategy = widget.hedgingStrategy;
+
+  @override
+  void initState() {
+    super.initState();
+    order = widget.order;
+    price = widget.price;
+    filledPrice = HedgeSumHelper.filledOrderSumPrice(order.orderId);
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) {
+        isHover = true;
+        setState(() {});
+      },
+      onExit: (_) {
+        isHover = false;
+        setState(() {});
+      },
+      child: Stack(
+        children: [
+          Container(
+            width: 300,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: const Color(0xff797979),
+                width: 1.0,
+                style: BorderStyle.solid,
+              ),
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            padding: const EdgeInsets.only(top: 5, right: 10, left: 10),
+            margin: const EdgeInsets.only(right: 10, left: 10),
+            child: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 5),
+                  child: Text('ID: ${price?.pricingId}'),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  height: 43,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            '点价价格/最新成交',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xff797979),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1.0,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${price?.pricingPrice.toStringAsFixed(0) ?? 0}',
+                                style: const TextStyle(color: Colors.blue),
+                              ),
+                              const Text('/74,670'),
+                              const Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 20,
+                                color: Colors.green,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                width: 50,
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '成交数量',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Color(0xff797979),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 60,
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '/点价数量',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Color(0xff797979),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 1.0,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                color: Color(0xffFFE18E),
+                                width: 45,
+                                height: 18,
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricedSpotQty ?? 0) ? price?.pricedSpotQty.toStringAsFixed(0) : price?.pricedSpotQty.toStringAsFixed(1) ?? 0} ',
+                                  style: TextStyle(
+                                    fontSize:
+                                        (price?.pricedSpotQty ?? 0) < 10000
+                                            ? 14
+                                            : 10,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                color: Color(0xffFFF2CC),
+                                width: 10,
+                                height: 18,
+                                child: Text(' / '),
+                              ),
+                              Container(
+                                color: Color(0xffFFF2CC),
+                                width: 40,
+                                height: 18,
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricingSpotQty ?? 0) ? price?.pricingSpotQty.toStringAsFixed(0) : price?.pricingSpotQty.toStringAsFixed(1) ?? 0} ',
+                                  style: TextStyle(
+                                    fontSize:
+                                        (price?.pricingSpotQty ?? 0) < 10000
+                                            ? 14
+                                            : 10,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 15,
+                                alignment: Alignment.centerRight,
+                                child: const Text('吨'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                if (hedgingStrategy.enterUsingCode != null)
+                  SizedBox(
+                    height: 1.0,
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: Container(
+                      color: const Color(0xff797979),
+                    ),
+                  ),
+                if (hedgingStrategy.enterUsingCode != null)
+                  Container(
+                    margin: const EdgeInsets.only(top: 5),
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Row(
+                            children: [
+                              Text(
+                                hedgingStrategy.enterStgId != '-1'
+                                    ? (widget.enterStrategy?.enterStgName ?? '')
+                                    : '标的进场',
+                                style: TextStyle(
+                                    color: hedgingStrategy.enterStgId != '-1'
+                                        ? Colors.blue
+                                        : Colors.green,
+                                    fontSize: 15),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                hedgingStrategy.enterUsingCode ?? '',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    color: Color(0xffC6FFBD),
+                                    width: 45,
+                                    height: 18,
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      '${HedgeSumHelper.checkNumFixedIsAllZero(order.completedFutQty) ? order.completedFutQty.toStringAsFixed(0) : order.completedFutQty.toStringAsFixed(1)} ',
+                                      style: TextStyle(
+                                        fontSize:
+                                            (order.completedFutQty) < 10000
+                                                ? 14
+                                                : 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    color: Color(0xffEFF6EC),
+                                    width: 10,
+                                    height: 18,
+                                    child: Text(' / '),
+                                  ),
+                                  Container(
+                                    color: Color(0xffEFF6EC),
+                                    width: 40,
+                                    height: 18,
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      '${HedgeSumHelper.checkNumFixedIsAllZero(order.hedgeQty) ? order.hedgeQty.toStringAsFixed(0) : order.hedgeQty.toStringAsFixed(1)} ',
+                                      style: TextStyle(
+                                        fontSize:
+                                            (order.hedgeQty) < 10000 ? 14 : 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 15,
+                                    alignment: Alignment.centerRight,
+                                    child: const Text('吨'),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 2.0,
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    '成交均价',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Color(0xff797979),
+                                    ),
+                                  ),
+                                  Text(
+                                    filledPrice.toStringAsFixed(0),
+                                    style: const TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          isHover
+              ? Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: 300,
+                    height: 65,
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(right: 10, left: 10),
+                    color: Color(0x80ffffff),
+                    child: Transform.rotate(
+                      angle: 50,
+                      child: Container(
+                        child: Text(
+                          '${HedgeSumHelper.numStatusToString(order.hedgingStatus)}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : Container()
+        ],
+      ),
+    );
+  }
 }

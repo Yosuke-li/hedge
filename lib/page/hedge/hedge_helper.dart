@@ -225,4 +225,20 @@ class HedgeSumHelper {
     final v = value.floor();
     return value - v == 0;
   }
+
+  static String numStatusToString(int status) {
+    late String result;
+    switch (status) {
+      case 0:
+        result = '进行中';
+        break;
+      case 1:
+        result = '已完成';
+        break;
+      case 2:
+        result = '已取消';
+        break;
+    }
+    return result;
+  }
 }
