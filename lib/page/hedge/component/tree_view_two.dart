@@ -517,35 +517,17 @@ class _OrderPriceItemState extends State<_OrderPriceItem> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                width: 50,
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  '成交数量',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    overflow: TextOverflow.ellipsis,
-                                    color: Color(0xff797979),
-                                  ),
-                                ),
+                          Container(
+                            width: 110,
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '成交数量 / 点价数量 ',
+                              style: TextStyle(
+                                fontSize: 12,
+                                overflow: TextOverflow.ellipsis,
+                                color: Color(0xff797979),
                               ),
-                              Container(
-                                width: 60,
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  '/点价数量',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    overflow: TextOverflow.ellipsis,
-                                    color: Color(0xff797979),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                           const SizedBox(
                             height: 1.0,
@@ -554,43 +536,54 @@ class _OrderPriceItemState extends State<_OrderPriceItem> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Container(
-                                color: Color(0xffFFE18E),
-                                width: 45,
-                                height: 18,
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricedSpotQty ?? 0) ? price?.pricedSpotQty.toStringAsFixed(0) : price?.pricedSpotQty.toStringAsFixed(1) ?? 0} ',
-                                  style: TextStyle(
-                                    fontSize:
-                                        (price?.pricedSpotQty ?? 0) < 10000
-                                            ? 14
-                                            : 10,
-                                    fontWeight: FontWeight.bold,
+                              Stack(
+                                children: [
+                                  Container(
+                                    width: 95,
+                                    height: 18,
+                                    child: LinearProgressIndicator(
+                                      value: price?.pricingSpotQty == null ? 0 : ((price?.pricedSpotQty??0) / (price?.pricingSpotQty??1)),
+                                      backgroundColor: Color(0xffFFF2CC),
+                                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xffFFE18E)),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Container(
-                                color: Color(0xffFFF2CC),
-                                width: 10,
-                                height: 18,
-                                child: Text(' / '),
-                              ),
-                              Container(
-                                color: Color(0xffFFF2CC),
-                                width: 40,
-                                height: 18,
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricingSpotQty ?? 0) ? price?.pricingSpotQty.toStringAsFixed(0) : price?.pricingSpotQty.toStringAsFixed(1) ?? 0} ',
-                                  style: TextStyle(
-                                    fontSize:
-                                        (price?.pricingSpotQty ?? 0) < 10000
-                                            ? 14
-                                            : 10,
-                                    fontWeight: FontWeight.bold,
+                                  Container(
+                                    width: 95,
+                                    height: 18,
+                                    alignment: Alignment.center,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricedSpotQty ?? 0) ? price?.pricedSpotQty.toStringAsFixed(0) : price?.pricedSpotQty.toStringAsFixed(1) ?? 0}',
+                                          style: TextStyle(
+                                            fontSize:
+                                            (price?.pricedSpotQty ?? 0) < 10000
+                                                ? 14
+                                                : 10,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 5,
+                                          height: 18,
+                                          child: Text('/'),
+                                        ),
+                                        Text(
+                                          '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricingSpotQty ?? 0) ? price?.pricingSpotQty.toStringAsFixed(0) : price?.pricingSpotQty.toStringAsFixed(1) ?? 0}',
+                                          style: TextStyle(
+                                            fontSize:
+                                            (price?.pricingSpotQty ?? 0) < 10000
+                                                ? 14
+                                                : 10,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                               Container(
                                 width: 15,
@@ -651,41 +644,54 @@ class _OrderPriceItemState extends State<_OrderPriceItem> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    color: Color(0xffC6FFBD),
-                                    width: 45,
-                                    height: 18,
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      '${HedgeSumHelper.checkNumFixedIsAllZero(order.completedFutQty) ? order.completedFutQty.toStringAsFixed(0) : order.completedFutQty.toStringAsFixed(1)} ',
-                                      style: TextStyle(
-                                        fontSize:
-                                            (order.completedFutQty) < 10000
-                                                ? 14
-                                                : 10,
-                                        fontWeight: FontWeight.bold,
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        width: 95,
+                                        height: 18,
+                                        child: LinearProgressIndicator(
+                                          value: (order.completedFutQty / order.hedgeQty),
+                                          backgroundColor: Color(0xffEFF6EC),
+                                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xffC6FFBD)),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Container(
-                                    color: Color(0xffEFF6EC),
-                                    width: 10,
-                                    height: 18,
-                                    child: Text(' / '),
-                                  ),
-                                  Container(
-                                    color: Color(0xffEFF6EC),
-                                    width: 40,
-                                    height: 18,
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      '${HedgeSumHelper.checkNumFixedIsAllZero(order.hedgeQty) ? order.hedgeQty.toStringAsFixed(0) : order.hedgeQty.toStringAsFixed(1)} ',
-                                      style: TextStyle(
-                                        fontSize:
-                                            (order.hedgeQty) < 10000 ? 14 : 10,
-                                        fontWeight: FontWeight.bold,
+                                      Container(
+                                        width: 95,
+                                        height: 18,
+                                        alignment: Alignment.center,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              '${HedgeSumHelper.checkNumFixedIsAllZero(order.completedFutQty) ? order.completedFutQty.toStringAsFixed(0) : order.completedFutQty.toStringAsFixed(1)}',
+                                              style: TextStyle(
+                                                fontSize:
+                                                order.completedFutQty < 10000
+                                                    ? 14
+                                                    : 10,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 5,
+                                              height: 18,
+                                              child: Text('/'),
+                                            ),
+                                            Text(
+                                              '${HedgeSumHelper.checkNumFixedIsAllZero(order.hedgeQty) ? order.hedgeQty.toStringAsFixed(0) : order.hedgeQty.toStringAsFixed(1)}',
+                                              style: TextStyle(
+                                                fontSize:
+                                                order.hedgeQty < 10000
+                                                    ? 14
+                                                    : 10,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                   Container(
                                     width: 15,
