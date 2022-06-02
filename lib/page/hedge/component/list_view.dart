@@ -69,7 +69,7 @@ class _ListViewPageState extends State<ListViewPage>
       itemBuilder: (BuildContext context, int index) {
         final HedgingStrategy strategy = ArrayHelper.get(strategies, index)!;
         return TreeViewSecPage(
-          // key: Key(strategy.hashCode.toString()),
+          key: Key(strategy.strategyId.toString()),
           hedgingStrategy: strategy,
           isFreeze: strategy.stgStatus == 3,
           controller: widget.controller,

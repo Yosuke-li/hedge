@@ -75,7 +75,7 @@ class _TreeViewSecPageState extends State<TreeViewSecPage> {
                   }
                 : null,
             child: _TreeViewItemPage(
-              key: Key(widget.hedgingStrategy.hashCode.toString()),
+              key: Key(widget.hedgingStrategy.strategyId.toString()),
               hedgingStrategy: widget.hedgingStrategy,
               isFreeze: widget.isFreeze,
               showTree: showTree,
@@ -151,6 +151,7 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
   }
 
   void init({String? key}) {
+    hedgingStrategy = getHedgingStrategy(hedgingStrategy.strategyId) ?? widget.hedgingStrategy;
     if (hedgingStrategy.enterStgId != '-1') {
       enterStrategy = getEnterStrategy(hedgingStrategy.enterStgId);
     }
@@ -186,6 +187,17 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
         .toList();
     if (enterStrategies.isNotEmpty == true) {
       return enterStrategies.first;
+    }
+    return null;
+  }
+
+  static HedgingStrategy? getHedgingStrategy(String id) {
+    List<HedgingStrategy> hedges = SocketMsgConduit.getHedgingStrategies;
+    hedges = hedges
+        .where((element) => element.strategyId == id)
+        .toList();
+    if (hedges.isNotEmpty == true) {
+      return hedges.first;
     }
     return null;
   }

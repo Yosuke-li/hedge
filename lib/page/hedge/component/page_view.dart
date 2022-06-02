@@ -260,7 +260,7 @@ class _PageItemViewState extends State<_PageItemView>
               Column(
                 children: [
                   Text(
-                    '${HedgeSumHelper.strategiesSumUsedSpotQty(e.schemeId)} ',
+                    '${HedgeSumHelper.strategiesSumUsedSpotQty(e.schemeId).toStringAsFixed(1)} ',
                     maxLines: 1,
                     style: const TextStyle(fontSize: 26),
                   ),
@@ -286,7 +286,7 @@ class _PageItemViewState extends State<_PageItemView>
               Column(
                 children: [
                   Text(
-                    '${HedgeSumHelper.strategiesSumCompletedSpotQty(e.schemeId)}',
+                    '${HedgeSumHelper.strategiesSumCompletedSpotQty(e.schemeId).toStringAsFixed(1)}',
                     maxLines: 1,
                     style: const TextStyle(fontSize: 26),
                   ),
@@ -311,7 +311,7 @@ class _PageItemViewState extends State<_PageItemView>
               Column(
                 children: [
                   Text(
-                    ' ${HedgeSumHelper.strategiesAtLessSpotQty(e.schemeId)}',
+                    ' ${HedgeSumHelper.strategiesAtLessSpotQty(e.schemeId).toStringAsFixed(1)}',
                     maxLines: 1,
                     style: const TextStyle(fontSize: 26),
                   ),
