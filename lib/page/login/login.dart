@@ -98,7 +98,8 @@ class _LoginPageState extends State<LoginPage> {
             LocateStorage.setStringWithExpire(
                 'userModel', jsonEncode(userModel), const Duration(days: 1));
             lock.unlock();
-            NavigatorUtils.pushWidget(context, HomePage(), replaceCurrent: true);
+            NavigatorUtils.pushWidget(context, HomePage(),
+                replaceCurrent: true);
           }
         } catch (error, stack) {
           lock.unlock();
@@ -183,13 +184,48 @@ class _LoginPageState extends State<LoginPage> {
                           setState(() {});
                         },
                         child: SizedBox(
-                          height: 50,
-                          child: Text(
-                              'logo 预留位置，目前地址${Global.environment == 'debug' ? '本地' : '线上'}'),
+                          height: 80,
+                          child: Column(
+                            children: [
+                              Text(
+                                  'logo 预留位置，目前地址${Global.environment == 'debug' ? '本地' : '线上'}'),
+                              if (Global.environment == 'debug')
+                                Column(
+                                  children: [
+                                    Container(
+                                      height: 30,
+                                      width: 250,
+                                      child: TextFormField(
+                                        initialValue: Url.debugDio,
+                                        onChanged: (String? value) {
+                                          if (value != null) {
+                                            Url.debugDio = value;
+                                            Url.debugWeb = value;
+                                            ApiUrl.changing();
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 30,
+                                      width: 250,
+                                      child: TextFormField(
+                                        initialValue: Url.debugSocket,
+                                        onChanged: (String? value) {
+                                          if (value != null) {
+                                            Url.debugSocket = value;
+                                            ApiUrl.changing();
+                                          }},
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(
-                        height: 70.0,
+                        height: 40.0,
                       ),
                       Container(
                         width: 300.0,
