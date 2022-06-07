@@ -556,7 +556,7 @@ class _OrderPriceItemState extends State<_OrderPriceItem> {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricedSpotQty ?? 0) ? price?.pricedSpotQty.toStringAsFixed(0) : price?.pricedSpotQty.toStringAsFixed(1) ?? 0}',
+                                          ' ${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricedSpotQty ?? 0) ? price?.pricedSpotQty.toStringAsFixed(0) : price?.pricedSpotQty.toStringAsFixed(1) ?? 0} ',
                                           style: TextStyle(
                                             fontSize:
                                             (price?.pricedSpotQty ?? 0) < 10000
@@ -571,7 +571,7 @@ class _OrderPriceItemState extends State<_OrderPriceItem> {
                                           child: Text('/'),
                                         ),
                                         Text(
-                                          '${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricingSpotQty ?? 0) ? price?.pricingSpotQty.toStringAsFixed(0) : price?.pricingSpotQty.toStringAsFixed(1) ?? 0}',
+                                          ' ${HedgeSumHelper.checkNumFixedIsAllZero(price?.pricingSpotQty ?? 0) ? price?.pricingSpotQty.toStringAsFixed(0) : price?.pricingSpotQty.toStringAsFixed(1) ?? 0} ',
                                           style: TextStyle(
                                             fontSize:
                                             (price?.pricingSpotQty ?? 0) < 10000
@@ -650,7 +650,7 @@ class _OrderPriceItemState extends State<_OrderPriceItem> {
                                         width: 95,
                                         height: 18,
                                         child: LinearProgressIndicator(
-                                          value: (order.completedFutQty / order.hedgeQty),
+                                          value: order.hedgeQty != 0 ? (order.completedFutQty / order.hedgeQty) : 0,
                                           backgroundColor: Color(0xffEFF6EC),
                                           valueColor: AlwaysStoppedAnimation<Color>(Color(0xffC6FFBD)),
                                         ),
@@ -664,7 +664,7 @@ class _OrderPriceItemState extends State<_OrderPriceItem> {
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              '${HedgeSumHelper.checkNumFixedIsAllZero(order.completedFutQty) ? order.completedFutQty.toStringAsFixed(0) : order.completedFutQty.toStringAsFixed(1)}',
+                                              ' ${HedgeSumHelper.checkNumFixedIsAllZero(order.completedFutQty) ? order.completedFutQty.toStringAsFixed(0) : order.completedFutQty.toStringAsFixed(1)} ',
                                               style: TextStyle(
                                                 fontSize:
                                                 order.completedFutQty < 10000
@@ -679,7 +679,7 @@ class _OrderPriceItemState extends State<_OrderPriceItem> {
                                               child: Text('/'),
                                             ),
                                             Text(
-                                              '${HedgeSumHelper.checkNumFixedIsAllZero(order.hedgeQty) ? order.hedgeQty.toStringAsFixed(0) : order.hedgeQty.toStringAsFixed(1)}',
+                                              ' ${HedgeSumHelper.checkNumFixedIsAllZero(order.hedgeQty) ? order.hedgeQty.toStringAsFixed(0) : order.hedgeQty.toStringAsFixed(1)} ',
                                               style: TextStyle(
                                                 fontSize:
                                                 order.hedgeQty < 10000
