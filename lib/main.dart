@@ -25,7 +25,7 @@ void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-    localNotifier.setAppName('com.example.hedgeManager');
+    localNotifier.setup(appName: 'com.example.hedgeManager');
 
     await windowManager.ensureInitialized();
 

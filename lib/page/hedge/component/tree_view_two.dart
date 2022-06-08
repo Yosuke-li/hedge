@@ -136,6 +136,7 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
   List<PricingApply> prices = <PricingApply>[];
 
   final ScrollController _controller = ScrollController();
+  final ScrollController _enterStgController = ScrollController();
   late String key;
 
   @override
@@ -224,38 +225,45 @@ class _TreeViewItemPageState extends State<_TreeViewItemPage>
             children: [
               SizedBox(
                 width: 380,
-                child: Row(
-                  children: [
-                    Text(
-                      hedgingStrategy.enterStgId != '-1'
-                          ? (enterStrategy?.enterStgName ?? '')
-                          : (hedgingStrategy.enterUsingCode == null
+                child: Scrollbar(
+                  controller: _enterStgController,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    controller: _enterStgController,
+                    child: Row(
+                      children: [
+                        Text(
+                          hedgingStrategy.enterStgId != '-1'
+                              ? (enterStrategy?.enterStgName ?? '')
+                              : (hedgingStrategy.enterUsingCode == null
                               ? '不进场'
                               : '标的进场'),
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        color: widget.isFreeze
-                            ? const Color(0x802196F3)
-                            : (hedgingStrategy.enterStgId == '-1'
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: widget.isFreeze
+                                ? const Color(0x802196F3)
+                                : (hedgingStrategy.enterStgId == '-1'
                                 ? hedgingStrategy.enterUsingCode == null
-                                    ? const Color(0xff8C1D18)
-                                    : Colors.green
+                                ? const Color(0xff8C1D18)
+                                : Colors.green
                                 : const Color(0xff6E6EC4)),
-                      ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          hedgingStrategy.enterUsingCode ?? '',
+                          style: TextStyle(
+                              fontSize: 26,
+                              color: widget.isFreeze
+                                  ? const Color(0x80000000)
+                                  : Colors.black),
+                        )
+                      ],
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      hedgingStrategy.enterUsingCode ?? '',
-                      style: TextStyle(
-                          fontSize: 26,
-                          color: widget.isFreeze
-                              ? const Color(0x80000000)
-                              : Colors.black),
-                    )
-                  ],
+                  ),
                 ),
               ),
               Scrollbar(
@@ -614,27 +622,33 @@ class _OrderPriceItemState extends State<_OrderPriceItem> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                hedgingStrategy.enterStgId != '-1'
-                                    ? (widget.enterStrategy?.enterStgName ?? '')
-                                    : '标的进场',
-                                style: TextStyle(
-                                    color: hedgingStrategy.enterStgId != '-1'
-                                        ? Colors.blue
-                                        : Colors.green,
-                                    fontSize: 15),
+                            width: 130,
+                            child: Scrollbar(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      hedgingStrategy.enterStgId != '-1'
+                                          ? (widget.enterStrategy?.enterStgName ?? '')
+                                          : '标的进场',
+                                      style: TextStyle(
+                                          color: hedgingStrategy.enterStgId != '-1'
+                                              ? Colors.blue
+                                              : Colors.green,
+                                          fontSize: 15),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      hedgingStrategy.enterUsingCode ?? '',
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                hedgingStrategy.enterUsingCode ?? '',
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
+                            ),
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 5),

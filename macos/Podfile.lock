@@ -10,6 +10,8 @@ PODS:
     - FlutterMacOS
   - path_provider_macos (0.0.1):
     - FlutterMacOS
+  - screen_retriever (0.0.1):
+    - FlutterMacOS
   - Sentry (7.11.0):
     - Sentry/Core (= 7.11.0)
   - Sentry/Core (7.11.0)
@@ -33,6 +35,7 @@ DEPENDENCIES:
   - local_notifier (from `Flutter/ephemeral/.symlinks/plugins/local_notifier/macos`)
   - package_info_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus_macos/macos`)
   - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
+  - screen_retriever (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos`)
   - sentry_flutter (from `Flutter/ephemeral/.symlinks/plugins/sentry_flutter/macos`)
   - shared_preferences_macos (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_macos/macos`)
   - tray_manager (from `Flutter/ephemeral/.symlinks/plugins/tray_manager/macos`)
@@ -56,6 +59,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/package_info_plus_macos/macos
   path_provider_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos
+  screen_retriever:
+    :path: Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos
   sentry_flutter:
     :path: Flutter/ephemeral/.symlinks/plugins/sentry_flutter/macos
   shared_preferences_macos:
@@ -74,6 +79,7 @@ SPEC CHECKSUMS:
   local_notifier: e9506bc66fc70311e8bc7291fb70f743c081e4ff
   package_info_plus_macos: f010621b07802a241d96d01876d6705f15e77c1c
   path_provider_macos: 3c0c3b4b0d4a76d2bf989a913c2de869c5641a19
+  screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
   Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
   sentry_flutter: efb3df2c203cd03aad255892a8d628a458656d14
   shared_preferences_macos: a64dc611287ed6cbe28fd1297898db1336975727
