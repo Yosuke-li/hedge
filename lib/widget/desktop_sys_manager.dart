@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hedge_manager/helper/log_utils.dart';
 import 'package:hedge_manager/widget/toast_utils.dart';
-import 'package:tray_manager/tray_manager.dart';
+import 'package:tray_manager/tray_manager.dart' as tray;
 import 'package:window_manager/window_manager.dart';
 
 /// 系统托盘
@@ -17,8 +17,8 @@ class DesktopSysManager extends StatefulWidget {
 }
 
 class _DesktopSysManagerState extends State<DesktopSysManager>
-    with TrayListener {
-  final TrayManager _trayManager = TrayManager.instance;
+    with tray.TrayListener {
+  final tray.TrayManager _trayManager = tray.TrayManager.instance;
 
   @override
   void initState() {
@@ -37,11 +37,11 @@ class _DesktopSysManagerState extends State<DesktopSysManager>
 
   /// 设置菜单项
   void _generateContextMenu() async {
-    List<MenuItem> items = [
-      MenuItem(label: '首页'),
-      MenuItem(label: '中台'),
+    List<tray.MenuItem> items = [
+      tray.MenuItem(label: '首页'),
+      tray.MenuItem(label: '中台'),
     ];
-    await _trayManager.setContextMenu(Menu(items: items));
+    await _trayManager.setContextMenu(tray.Menu(items: items));
   }
 
   @override
@@ -57,7 +57,7 @@ class _DesktopSysManagerState extends State<DesktopSysManager>
   }
 
   @override
-  void onTrayMenuItemClick(MenuItem menuItem) {
+  void onTrayMenuItemClick(tray.MenuItem menuItem) {
     ToastUtils.showToast(msg: '你选择了${menuItem.label}');
   }
 

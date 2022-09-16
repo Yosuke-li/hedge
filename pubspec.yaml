@@ -18,6 +18,7 @@ dependencies:
   path_provider: ^2.0.9
   desktop_webview_window: ^0.1.6
   #  webview_windows: ^0.1.8
+#  webview_cef 0.0.2
 
   dio: ^4.0.6
   shared_preferences: ^2.0.13
@@ -28,7 +29,6 @@ dependencies:
   shell: ^2.0.0
   device_info_plus: ^3.2.3
   flutter_swiper_plus: ^2.0.4
-  sentry_flutter: ^6.5.1
   tray_manager: ^0.1.7 #系统托盘
   local_notifier: ^0.1.4
 
